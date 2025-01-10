@@ -1,0 +1,23 @@
+src/
+├── components/
+│   ├── MovieCard.jsx
+│   ├── TvShowCard.jsx
+│   └── SearchBar.jsx
+│
+├── features/
+│   └── moviesSlice.js
+│
+├── pages/
+│   ├── MoviesPage.jsx
+│   ├── MovieDetail.jsx
+│   ├── TvShowsPage.jsx
+│   └── TvShowDetail.jsx
+│
+├── services/
+│   └── omdbApi.js
+│
+├── App.jsx
+├── index.js
+├── store.js
+└── styles/
+    └── variables.scss
