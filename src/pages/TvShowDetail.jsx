@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { getMovieDetail } from '../redux/moviesSlice';
+import { getMovieDetail } from '../features/moviesSlice';
 
 const TvShowDetail = () => {
     const { id } = useParams();

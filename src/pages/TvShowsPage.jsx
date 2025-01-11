@@ -1,7 +1,7 @@
 // src/pages/TvShowsPage.jsx
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getTvShows } from '../redux/moviesSlice';
+import { getTvShows } from '../features/moviesSlice';
 import { Link } from 'react-router-dom';
 
 const TvShowsPage = () => {
