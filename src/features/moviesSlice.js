@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { fetchMovies, fetchMovieDetail, fetchTvShows } from '../services/tmdbApi';
 
+
 export const getMovies = createAsyncThunk('movies/getMovies', async (search) => {
     return await fetchMovies(search);
 });

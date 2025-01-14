@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getTvShows } from '../features/moviesSlice';
 import { Link } from 'react-router-dom';
+import { tvshow} from '../components/TvShowCard';
 
 const TvShowsPage = () => {
     const [search, setSearch] = useState('');

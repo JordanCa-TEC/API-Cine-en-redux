@@ -26,17 +26,11 @@ const SearchBar = ({ onSearch }) => {
   );
 };
 
-// Definición de PropTypes
+// Si quieres agregar PropTypes, sería para el prop `onSearch`:
 import PropTypes from 'prop-types';
 
-MovieCard.propTypes = {
-  movie: PropTypes.shape({
-    title: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-    posterUrl: PropTypes.string.isRequired,
-  }).isRequired,
+SearchBar.propTypes = {
+  onSearch: PropTypes.func.isRequired,
 };
 
-
 export default SearchBar;
-
