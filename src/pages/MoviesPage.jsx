@@ -1,32 +1,43 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getMovies } from '../features/moviesSlice';
+import { loadMovies } from '../features/moviesSlice'; // Asegúrate de importar la acción correctamente
 import MovieCard from '../components/MovieCard';
 
 const MoviesPage = () => {
-    const [search, setSearch] = useState('');
-    const dispatch = useDispatch();
-    const movies = useSelector((state) => state.movies.movies);
+  const dispatch = useDispatch();
+  const movies = useSelector((state) => state.movies.movies);
+  const status = useSelector((state) => state.movies.status);
+  const error = useSelector((state) => state.movies.error);
 
-    const handleSearch = () => {
-        dispatch(getMovies(search));
-    };
+  const [searchTerm, setSearchTerm] = useState('');
 
-    return (
-        <div>
-            <input 
-                type="text" 
-                value={search} 
-                onChange={(e) => setSearch(e.target.value)} 
-            />
-            <button onClick={handleSearch}>Buscar</button>
-            <div>
-                {movies?.map((movie) => (
-                    <MovieCard key={movie.imdbID} movie={movie} />
-                ))}
-            </div>
-        </div>
-    );
+  useEffect(() => {
+    if (searchTerm) {
+      dispatch(loadMovies(searchTerm));
+    }
+  }, [dispatch, searchTerm]);
+
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  return (
+    <div>
+      <input
+        type="text"
+        value={searchTerm}
+        onChange={handleSearchChange}
+        placeholder="Buscar películas..."
+      />
+      {status === 'loading' && <p>Cargando...</p>}
+      {error && <p>Error: {error}</p>}
+      <div className="movie-list">
+        {movies.map((movie) => (
+          <MovieCard key={movie.id} movie={movie} />
+        ))}
+      </div>
+    </div>
+  );
 };
 
 export default MoviesPage;

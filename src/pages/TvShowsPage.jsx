@@ -1,37 +1,44 @@
-// src/pages/TvShowsPage.jsx
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getTvShows } from '../features/moviesSlice';
-import { Link } from 'react-router-dom';
-import { tvshow} from '../components/TvShowCard';
+import { getTvShows } from '../features/moviesSlice'; // Asegúrate de importar correctamente
+import TvShowCard from '../components/TvShowCard';
 
 const TvShowsPage = () => {
-    const [search, setSearch] = useState('');
-    const dispatch = useDispatch();
-    const tvShows = useSelector((state) => state.movies.tvShows);
+  const dispatch = useDispatch();
+  const tvShows = useSelector((state) => state.movies.tvShows);
+  const status = useSelector((state) => state.movies.status);
+  const error = useSelector((state) => state.movies.error);
 
-    const handleSearch = () => {
-        dispatch(getTvShows(search));
-    };
+  const [searchTerm, setSearchTerm] = useState('');
 
-    return (
-        <div>
-            <h1>Buscar Series de TV</h1>
-            <input
-                type="text"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-            />
-            <button onClick={handleSearch}>Buscar</button>
-            <ul>
-                {tvShows.map((show) => (
-                    <li key={show.id}>
-                        <Link to={`/tvshows/${show.id}`}>{show.name}</Link>
-                    </li>
-                ))}
-            </ul>
-        </div>
-    );
+  useEffect(() => {
+    if (searchTerm) {
+      dispatch(getTvShows(searchTerm));
+    }
+  }, [dispatch, searchTerm]);
+
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  if (status === 'loading') return <p>Cargando...</p>;
+  if (status === 'failed') return <p>Error: {error}</p>;
+
+  return (
+    <div>
+      <input
+        type="text"
+        value={searchTerm}
+        onChange={handleSearchChange}
+        placeholder="Buscar programas de TV..."
+      />
+      <div className="tv-show-list">
+        {tvShows.map((tvShow) => (
+          <TvShowCard key={tvShow.id} tvShow={tvShow} />
+        ))}
+      </div>
+    </div>
+  );
 };
 
 export default TvShowsPage;
